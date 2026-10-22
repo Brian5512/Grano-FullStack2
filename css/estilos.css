@@ -1,4 +1,15 @@
-/* Estos estilos se comparten en todas las páginas de Grano. */
+:root {
+  --verde: #2d4938;
+  --verde-oscuro: #203829;
+  --crema: #f8f5ee;
+  --papel: #fffdfa;
+  --tinta: #263c30;
+  --texto-suave: #58675c;
+  --borde: #dedfd4;
+  --radio: 0.8rem;
+  --sombra-suave: 0 0.5rem 1.5rem rgba(38, 60, 48, 0.06);
+}
+
 :root {
   --verde: #2d4938;
   --crema: #f8f5ee;
@@ -33,21 +44,22 @@ h2 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
 }
 
-/* navbar y flex-wrap ordenan la cabecera sin usar JavaScript. */
 .navbar-brand,
 .marca {
   color: var(--verde);
-  font-size: 2.7rem;
   font-weight: bold;
+  font-size: 2.7rem;
   line-height: 1;
   text-decoration: none;
 }
 
 .marca-sub {
   display: block;
-  margin-top: 0.6rem;
-  font: 0.6rem Arial, sans-serif;
+  font:
+    0.6rem Arial,
+    sans-serif;
   letter-spacing: 0.18em;
+  margin-top: 0.6rem;
 }
 
 .nav-link {
@@ -81,54 +93,11 @@ h2 {
 }
 
 .etiqueta {
-  margin-bottom: 0.8rem;
   font-size: 0.75rem;
   font-weight: bold;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-/* Cambié las variables de Bootstrap para que los botones usen el verde de Grano. */
-.btn-success {
-  --bs-btn-bg: #2d4938;
-  --bs-btn-border-color: #2d4938;
-  --bs-btn-hover-bg: #203829;
-  --bs-btn-hover-border-color: #203829;
-  --bs-btn-active-bg: #203829;
-  --bs-btn-active-border-color: #203829;
-  --bs-btn-disabled-bg: #2d4938;
-  --bs-btn-disabled-border-color: #2d4938;
-}
-
-.btn-outline-success {
-  --bs-btn-color: #2d4938;
-  --bs-btn-border-color: #2d4938;
-  --bs-btn-hover-bg: #2d4938;
-  --bs-btn-hover-border-color: #2d4938;
-  --bs-btn-active-bg: #203829;
-  --bs-btn-active-border-color: #203829;
-  --bs-btn-disabled-color: #2d4938;
-  --bs-btn-disabled-border-color: #2d4938;
-}
-
-.btn {
-  border-radius: 0.35rem;
-  padding: 0.65rem 1.1rem;
-}
-
-.enlace-carrito {
-  white-space: nowrap;
-}
-
-.contador-carrito {
-  display: inline-grid;
-  min-width: 1.4rem;
-  height: 1.4rem;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--verde);
-  color: var(--crema);
-  font-size: 0.75rem;
+  margin-bottom: 0.8rem;
 }
 
 a:focus-visible,
@@ -142,29 +111,13 @@ textarea:focus-visible {
 
 .saltar {
   position: absolute;
-  z-index: 10;
-  top: -80px;
   left: 1rem;
+  top: -80px;
   padding: 0.8rem;
   background: white;
+  z-index: 10;
 }
 
 .saltar:focus {
   top: 0.5rem;
-}
-
-@media (max-width: 575px) {
-  .navbar {
-    justify-content: center;
-  }
-
-  .navbar nav {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .nav-link {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
 }

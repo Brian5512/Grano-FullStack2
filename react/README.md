@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-La pantalla muestra un catálogo sencillo con seis productos de ejemplo. Cada tarjeta abre la ficha del producto y permite volver al catálogo. También se pueden agregar productos al carrito y quitarlos; el contador y la lista se manejan con el estado de React (`useState`). El carrito se guarda en `localStorage` para que siga ahí al recargar. Esta práctica no procesa compras.
+La aplicación incluye el catálogo y las fichas de producto, un carrito que se guarda en `localStorage`, acceso y registro con validación del RUT, cuenta de comprador, contacto y un panel de administración. Usuarios, sesión y mensajes de esta práctica también se guardan en `localStorage`; el acceso de prueba es `admin@duocuc.cl` con contraseña `1234`. Como es una maqueta, no procesa compras ni usa un servidor.
 
 ## Archivos que se integran
 

@@ -73,6 +73,20 @@ a:focus-visible {
   text-decoration: none;
 }
 
+.boton-marca {
+  align-items: flex-start;
+  padding: 0;
+  border: 0;
+  color: #2d4938;
+  background: transparent;
+  text-align: left;
+}
+
+.boton-marca:hover {
+  color: #203829;
+  background: transparent;
+}
+
 .marca-sub {
   display: block;
   margin-top: 8px;
@@ -89,6 +103,19 @@ a:focus-visible {
 
 .encabezado nav a {
   text-underline-offset: 4px;
+}
+
+.enlace-menu {
+  padding: 4px 0;
+  border: 0;
+  color: #2d4938;
+  background: transparent;
+}
+
+.enlace-menu:hover {
+  color: #203829;
+  background: transparent;
+  text-decoration: underline;
 }
 
 .encabezado nav button {
@@ -267,6 +294,122 @@ main {
   margin: 5px 0;
 }
 
+.pantalla-formularios,
+.pantalla-cuenta,
+.pantalla-contacto,
+.pantalla-admin {
+  padding: 48px 0 64px;
+}
+
+.titulo-pantalla {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.titulo-pantalla h1,
+.pantalla-contacto h1,
+.pantalla-admin h1,
+.pantalla-cuenta h1 {
+  margin-top: 4px;
+  font-size: clamp(34px, 4vw, 48px);
+}
+
+.columnas-formularios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 24px;
+}
+
+.panel-formulario {
+  margin-bottom: 24px;
+  padding: 26px;
+  border: 1px solid #dedfd4;
+  border-radius: 12px;
+  background: #fffdfa;
+  box-shadow: 0 8px 24px rgba(38, 60, 48, 0.06);
+}
+
+.panel-registro {
+  background: #f0eee5;
+}
+
+.panel-formulario h2 {
+  margin: 0 0 18px;
+  font-size: 26px;
+}
+
+.panel-formulario form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.panel-formulario label {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.panel-formulario input,
+.panel-formulario textarea,
+.panel-formulario select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #bfc8bf;
+  border-radius: 5px;
+  color: #263c30;
+  background: #fff;
+  font: inherit;
+}
+
+.panel-formulario input:focus,
+.panel-formulario textarea:focus,
+.panel-formulario select:focus {
+  outline: 2px solid #2d4938;
+  outline-offset: 1px;
+}
+
+.panel-formulario form button {
+  margin-top: 16px;
+}
+
+.ayuda-formulario,
+.mensaje-formulario {
+  min-height: 1.5em;
+  margin: 4px 0 8px;
+  color: #58675c;
+  font-size: 14px;
+}
+
+.mensaje-formulario {
+  color: #2d4938;
+}
+
+.lista-pedidos {
+  padding-left: 20px;
+}
+
+.cambiar-clave {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #dedfd4;
+}
+
+.cambiar-clave summary {
+  color: #2d4938;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cambiar-clave form {
+  margin-top: 12px;
+}
+
+.pantalla-admin > .panel-formulario ul {
+  padding-left: 20px;
+}
+
 .pie {
   padding: 22px 8%;
   color: #f8f5ee;
@@ -281,7 +424,8 @@ main {
   }
 
   .presentacion,
-  .detalle-producto {
+  .detalle-producto,
+  .columnas-formularios {
     grid-template-columns: 1fr;
   }
 

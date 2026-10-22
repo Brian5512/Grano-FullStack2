@@ -1,23 +1,47 @@
+import { useState } from "react";
 import Catalogo from "./components/Catalogo.jsx";
+import DetalleProducto from "./components/DetalleProducto.jsx";
 
 function App() {
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+
   return (
     <>
       <header className="encabezado">
-        <a className="marca" href="/">grano</a>
+        <a
+          className="marca"
+          href="#productos"
+          onClick={() => setProductoSeleccionado(null)}
+        >
+          grano
+        </a>
         <nav>
-          <a href="#productos">Nuestro café</a>
+          <a
+            href="#productos"
+            onClick={() => setProductoSeleccionado(null)}
+          >
+            Nuestro café
+          </a>
         </nav>
       </header>
 
       <main>
-        <section className="presentacion">
-          <p className="etiqueta">CAFÉ DE ESPECIALIDAD</p>
-          <h1>Un buen café para cada día.</h1>
-          <p>Esta es la primera pantalla de práctica para trabajar los productos con React.</p>
-        </section>
+        {productoSeleccionado ? (
+          <DetalleProducto
+            producto={productoSeleccionado}
+            volver={() => setProductoSeleccionado(null)}
+          />
+        ) : (
+          <>
+            <section className="presentacion">
+              <p className="etiqueta">CAFÉ DE ESPECIALIDAD</p>
+              <h1>Un buen café para cada día.</h1>
+              <p>Encuentra un café o un accesorio para tu próxima pausa.</p>
+            </section>
 
-        <Catalogo />
+            <Catalogo onVerDetalle={setProductoSeleccionado} />
+          </>
+        )}
       </main>
 
       <footer className="pie">

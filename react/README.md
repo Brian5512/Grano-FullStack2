@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-La primera pantalla muestra un catálogo sencillo. Los productos de `src/datos/productos.js` son datos de ejemplo para aprender cómo React los muestra en tarjetas.
+La pantalla muestra un catálogo sencillo con seis productos de ejemplo. Cada tarjeta abre la ficha del producto y permite volver al catálogo. Ese cambio de pantalla usa el estado de React (`useState`), sin agregar un enrutador.
 
 ## Archivos que se integran
 

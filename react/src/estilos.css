@@ -410,6 +410,20 @@ main {
   padding-left: 20px;
 }
 
+.lista-productos-admin {
+  max-width: 650px;
+  list-style: none;
+}
+
+.lista-productos-admin li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #dedfd4;
+}
+
 .pie {
   padding: 22px 8%;
   color: #f8f5ee;

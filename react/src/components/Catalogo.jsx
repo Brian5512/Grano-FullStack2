@@ -1,7 +1,6 @@
-import { productos } from "../datos/productos.js";
 import TarjetaProducto from "./TarjetaProducto.jsx";
 
-function Catalogo({ onVerDetalle, onAgregar }) {
+function Catalogo({ productos, onVerDetalle, onAgregar }) {
   return (
     <section id="productos" className="catalogo">
       <h2>Nuestros cafés</h2>

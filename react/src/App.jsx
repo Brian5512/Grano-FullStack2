@@ -7,6 +7,8 @@ import Cuenta from "./components/Cuenta.jsx";
 import Contacto from "./components/Contacto.jsx";
 import Administracion from "./components/Administracion.jsx";
 import imagenHero from "./assets/hero.svg";
+import imagenProductoNuevo from "./assets/producto-nuevo.svg";
+import { productos as productosIniciales } from "./datos/productos.js";
 
 function leerDato(clave, valorInicial) {
   const datoGuardado = localStorage.getItem(clave);
@@ -54,6 +56,16 @@ function App() {
     leerDato("granoMensajesReact", []),
   );
   const [pedidos] = useState(() => leerDato("granoPedidosReact", []));
+  const [productosNuevos, setProductosNuevos] = useState(() =>
+    leerDato("granoProductosReact", []),
+  );
+  const productos = [
+    ...productosIniciales,
+    ...productosNuevos.map((producto) => ({
+      ...producto,
+      imagen: imagenProductoNuevo,
+    })),
+  ];
 
   useEffect(() => {
     localStorage.setItem("granoCarritoReact", JSON.stringify(carrito));
@@ -70,6 +82,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("granoMensajesReact", JSON.stringify(mensajes));
   }, [mensajes]);
+
+  useEffect(() => {
+    localStorage.setItem("granoProductosReact", JSON.stringify(productosNuevos));
+  }, [productosNuevos]);
 
   function agregarAlCarrito(producto) {
     setCarrito([...carrito, producto]);
@@ -155,6 +171,37 @@ function App() {
     setMensajes([mensajeNuevo, ...mensajes]);
   }
 
+  function crearProducto(datosProducto) {
+    const nombre = datosProducto.nombre.trim();
+    const precio = Number(datosProducto.precio);
+    const nombreExiste = productos.some(
+      (producto) => producto.nombre.toLowerCase() === nombre.toLowerCase(),
+    );
+
+    if (!nombre || !Number.isFinite(precio) || precio <= 0 || nombreExiste) {
+      return false;
+    }
+
+    setProductosNuevos([
+      ...productosNuevos,
+      {
+        id: `nuevo-${Date.now()}`,
+        nombre,
+        categoria: datosProducto.categoria,
+        descripcion: datosProducto.descripcion.trim(),
+        detalle: datosProducto.detalle.trim(),
+        precio,
+      },
+    ]);
+    return true;
+  }
+
+  function quitarProducto(idProducto) {
+    setProductosNuevos(
+      productosNuevos.filter((producto) => producto.id !== idProducto),
+    );
+  }
+
   function mostrarCatalogo() {
     setPagina("catalogo");
     setProductoSeleccionado(null);
@@ -202,6 +249,9 @@ function App() {
         mensajes={mensajes}
         pedidos={pedidos}
         onCrearUsuario={registrarUsuario}
+        productosNuevos={productosNuevos}
+        onCrearProducto={crearProducto}
+        onQuitarProducto={quitarProducto}
       />
     );
   } else if (pagina === "contacto") {
@@ -228,6 +278,7 @@ function App() {
         </section>
 
         <Catalogo
+          productos={productos}
           onVerDetalle={(producto) => {
             setProductoSeleccionado(producto);
             setPagina("detalle");

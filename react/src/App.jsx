@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Catalogo from "./components/Catalogo.jsx";
 import DetalleProducto from "./components/DetalleProducto.jsx";
 import Carrito from "./components/Carrito.jsx";
 
 function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [carrito, setCarrito] = useState([]);
+  const [carrito, setCarrito] = useState(() => {
+    const carritoGuardado = localStorage.getItem("granoCarritoReact");
+
+    if (carritoGuardado) {
+      return JSON.parse(carritoGuardado);
+    }
+
+    return [];
+  });
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("granoCarritoReact", JSON.stringify(carrito));
+  }, [carrito]);
 
   function agregarAlCarrito(producto) {
     setCarrito([...carrito, producto]);

@@ -1,6 +1,6 @@
 # React separado para practicar
 
-Esta carpeta contiene una aplicación independiente para aprender y preparar la migración. No usa las páginas HTML ni los archivos JavaScript o CSS del sitio principal.
+Esta carpeta contiene una aplicación independiente para aprender y preparar la migración. No usa las páginas HTML ni los archivos JavaScript o CSS del sitio principal. Las imágenes que necesita están copiadas dentro de `src/assets`.
 
 ## Probar la aplicación
 

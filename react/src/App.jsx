@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Catalogo from "./components/Catalogo.jsx";
 import DetalleProducto from "./components/DetalleProducto.jsx";
 import Carrito from "./components/Carrito.jsx";
+import imagenHero from "./assets/hero.svg";
 
 function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <>
+      <div className="franja">Café de especialidad, a tu ritmo.</div>
       <header className="encabezado">
         <a
           className="marca"
@@ -45,6 +47,7 @@ function App() {
           onClick={volverAlCatalogo}
         >
           grano
+          <span className="marca-sub">CAFÉ &amp; RITUALES</span>
         </a>
         <nav>
           <a
@@ -78,9 +81,21 @@ function App() {
         ) : (
           <>
             <section className="presentacion">
-              <p className="etiqueta">CAFÉ DE ESPECIALIDAD</p>
-              <h1>Un buen café para cada día.</h1>
-              <p>Encuentra un café o un accesorio para tu próxima pausa.</p>
+              <div>
+                <p className="etiqueta">CAFÉ &amp; RITUALES</p>
+                <h1>Tu día empieza con un buen café.</h1>
+                <p>
+                  Cafés de origen y pequeños detalles para disfrutar sin apuro.
+                  Encuentra tu próxima taza favorita.
+                </p>
+                <a className="boton-enlace" href="#productos">
+                  Conoce nuestro café ↗
+                </a>
+              </div>
+              <img
+                src={imagenHero}
+                alt="Bolsas de café Grano junto a una taza"
+              />
             </section>
 
             <Catalogo

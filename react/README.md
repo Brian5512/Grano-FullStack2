@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-La pantalla muestra un catálogo sencillo con seis productos de ejemplo. Cada tarjeta abre la ficha del producto y permite volver al catálogo. Ese cambio de pantalla usa el estado de React (`useState`), sin agregar un enrutador.
+La pantalla muestra un catálogo sencillo con seis productos de ejemplo. Cada tarjeta abre la ficha del producto y permite volver al catálogo. También se pueden agregar productos al carrito y quitarlos; el contador y la lista se manejan con el estado de React (`useState`). El carrito es solo una práctica en memoria: todavía no guarda datos al recargar ni procesa compras.
 
 ## Archivos que se integran
 

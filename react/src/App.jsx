@@ -1,9 +1,28 @@
 import { useState } from "react";
 import Catalogo from "./components/Catalogo.jsx";
 import DetalleProducto from "./components/DetalleProducto.jsx";
+import Carrito from "./components/Carrito.jsx";
 
 function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [carrito, setCarrito] = useState([]);
+  const [mostrarCarrito, setMostrarCarrito] = useState(false);
+
+  function agregarAlCarrito(producto) {
+    setCarrito([...carrito, producto]);
+  }
+
+  function quitarDelCarrito(indiceProducto) {
+    const carritoActualizado = carrito.filter(
+      (producto, indice) => indice !== indiceProducto,
+    );
+    setCarrito(carritoActualizado);
+  }
+
+  function volverAlCatalogo() {
+    setProductoSeleccionado(null);
+    setMostrarCarrito(false);
+  }
 
   return (
     <>
@@ -11,25 +30,38 @@ function App() {
         <a
           className="marca"
           href="#productos"
-          onClick={() => setProductoSeleccionado(null)}
+          onClick={volverAlCatalogo}
         >
           grano
         </a>
         <nav>
           <a
             href="#productos"
-            onClick={() => setProductoSeleccionado(null)}
+            onClick={volverAlCatalogo}
           >
             Nuestro café
           </a>
+          <button
+            className="boton-carrito"
+            type="button"
+            onClick={() => {
+              setProductoSeleccionado(null);
+              setMostrarCarrito(true);
+            }}
+          >
+            Carrito ({carrito.length})
+          </button>
         </nav>
       </header>
 
       <main>
-        {productoSeleccionado ? (
+        {mostrarCarrito ? (
+          <Carrito carrito={carrito} onQuitar={quitarDelCarrito} />
+        ) : productoSeleccionado ? (
           <DetalleProducto
             producto={productoSeleccionado}
             volver={() => setProductoSeleccionado(null)}
+            onAgregar={agregarAlCarrito}
           />
         ) : (
           <>
@@ -39,7 +71,10 @@ function App() {
               <p>Encuentra un café o un accesorio para tu próxima pausa.</p>
             </section>
 
-            <Catalogo onVerDetalle={setProductoSeleccionado} />
+            <Catalogo
+              onVerDetalle={setProductoSeleccionado}
+              onAgregar={agregarAlCarrito}
+            />
           </>
         )}
       </main>

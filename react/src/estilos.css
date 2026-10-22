@@ -33,6 +33,12 @@ a {
   text-decoration: none;
 }
 
+.encabezado nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
 button {
   padding: 10px 14px;
   border: 0;
@@ -40,6 +46,16 @@ button {
   color: #fff;
   background: #4c3827;
   cursor: pointer;
+}
+
+.boton-secundario {
+  margin-left: 8px;
+  color: #4c3827;
+  background: #eee8df;
+}
+
+.boton-carrito {
+  margin-left: 8px;
 }
 
 main {
@@ -99,6 +115,35 @@ main {
 .detalle-producto p:not(.etiqueta, .precio) {
   max-width: 600px;
   line-height: 1.6;
+}
+
+.detalle-producto button {
+  margin: 8px 8px 0 0;
+}
+
+.carrito {
+  min-height: 440px;
+  padding: 50px 0;
+}
+
+.lista-carrito {
+  max-width: 700px;
+  padding: 0;
+  list-style: none;
+}
+
+.producto-carrito {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e4ddd3;
+}
+
+.producto-carrito h2,
+.producto-carrito p {
+  margin: 5px 0;
 }
 
 .pie {

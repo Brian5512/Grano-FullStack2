@@ -1,4 +1,4 @@
-function DetalleProducto({ producto, volver }) {
+function DetalleProducto({ producto, volver, onAgregar }) {
   return (
     <section className="detalle-producto">
       <p className="etiqueta">{producto.categoria}</p>
@@ -6,7 +6,10 @@ function DetalleProducto({ producto, volver }) {
       <p>{producto.descripcion}</p>
       <p>{producto.detalle}</p>
       <p className="precio">${producto.precio.toLocaleString("es-CL")} CLP</p>
-      <button type="button" onClick={volver}>
+      <button type="button" onClick={() => onAgregar(producto)}>
+        Añadir al carrito
+      </button>
+      <button className="boton-secundario" type="button" onClick={volver}>
         Volver a nuestros productos
       </button>
     </section>

@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #29251f;
+  background: #faf8f4;
+  font-family: Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.encabezado,
+.pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 8%;
+  background: #fff;
+}
+
+.marca {
+  color: #4c3827;
+  font-size: 28px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.encabezado nav a {
+  text-decoration: none;
+}
+
+main {
+  width: 84%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.presentacion {
+  padding: 70px 0 45px;
+}
+
+.presentacion h1 {
+  max-width: 600px;
+  margin: 8px 0;
+  font-size: 42px;
+}
+
+.etiqueta {
+  color: #816342;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.catalogo {
+  padding-bottom: 60px;
+}
+
+.lista-productos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.tarjeta {
+  padding: 22px;
+  border: 1px solid #e4ddd3;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.precio {
+  color: #4c3827;
+  font-weight: bold;
+}
+
+.pie {
+  justify-content: center;
+  color: #62594e;
+}
+
+@media (max-width: 700px) {
+  .lista-productos {
+    grid-template-columns: 1fr;
+  }
+
+  .presentacion h1 {
+    font-size: 34px;
+  }
+}

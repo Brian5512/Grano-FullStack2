@@ -26,14 +26,28 @@
     productos.forEach((producto) => {
       const item = document.createElement("article");
       item.className = "item-carrito";
-      item.innerHTML = `
-        <img src="${producto.imagen}" alt="${producto.nombre}">
-        <div>
-          <h2 class="h5">${producto.nombre}</h2>
-          <p class="mb-0">$${producto.precio.toLocaleString("es-CL")} CLP · Cantidad: ${producto.cantidad}</p>
-        </div>
-        <button class="btn btn-outline-success btn-sm" type="button" data-quitar="${producto.id}">Quitar</button>
-      `;
+
+      const imagen = document.createElement("img");
+      imagen.src = producto.imagen;
+      imagen.alt = producto.nombre;
+
+      const detalle = document.createElement("div");
+      const nombre = document.createElement("h2");
+      nombre.className = "h5";
+      nombre.textContent = producto.nombre;
+
+      const precio = document.createElement("p");
+      precio.className = "mb-0";
+      precio.textContent = `$${producto.precio.toLocaleString("es-CL")} CLP · Cantidad: ${producto.cantidad}`;
+
+      const botonQuitar = document.createElement("button");
+      botonQuitar.className = "btn btn-outline-success btn-sm";
+      botonQuitar.type = "button";
+      botonQuitar.dataset.quitar = producto.id;
+      botonQuitar.textContent = "Quitar";
+
+      detalle.append(nombre, precio);
+      item.append(imagen, detalle, botonQuitar);
       lista.appendChild(item);
     });
   }
@@ -43,6 +57,7 @@
     const quitar = evento.target.closest("[data-quitar]");
 
     if (agregar) {
+      const textoOriginal = agregar.textContent;
       carrito.agregar({
         id: agregar.dataset.id,
         nombre: agregar.dataset.nombre,
@@ -51,7 +66,7 @@
       });
       actualizarContador();
       agregar.textContent = "Añadido";
-      setTimeout(() => (agregar.textContent = "Añadir"), 900);
+      setTimeout(() => (agregar.textContent = textoOriginal), 900);
     }
 
     if (quitar) {

@@ -43,7 +43,7 @@ function cargarUsuarios() {
 }
 
 function App() {
-  const [pagina, setPagina] = useState("catalogo");
+  const [pagina, setPagina] = useState("inicio");
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [carrito, setCarrito] = useState(() =>
     leerDato("granoCarritoReact", []),
@@ -55,7 +55,8 @@ function App() {
   const [mensajes, setMensajes] = useState(() =>
     leerDato("granoMensajesReact", []),
   );
-  const [pedidos] = useState(() => leerDato("granoPedidosReact", []));
+  const [pedidos, setPedidos] = useState(() => leerDato("granoPedidosReact", []));
+  const [mensajeCompra, setMensajeCompra] = useState("");
   const [productosNuevos, setProductosNuevos] = useState(() =>
     leerDato("granoProductosReact", []),
   );
@@ -63,7 +64,7 @@ function App() {
     ...productosIniciales,
     ...productosNuevos.map((producto) => ({
       ...producto,
-      imagen: imagenProductoNuevo,
+      imagen: producto.imagen || imagenProductoNuevo,
     })),
   ];
 
@@ -84,11 +85,12 @@ function App() {
   }, [mensajes]);
 
   useEffect(() => {
-    localStorage.setItem("granoProductosReact", JSON.stringify(productosNuevos));
-  }, [productosNuevos]);
+    localStorage.setItem("granoPedidosReact", JSON.stringify(pedidos));
+  }, [pedidos]);
 
   function agregarAlCarrito(producto) {
     setCarrito([...carrito, producto]);
+    setMensajeCompra("");
   }
 
   function quitarDelCarrito(indiceProducto) {
@@ -96,6 +98,29 @@ function App() {
       (producto, indice) => indice !== indiceProducto,
     );
     setCarrito(carritoActualizado);
+  }
+
+  function confirmarCompra() {
+    if (!sesion || sesion.rol !== "comprador" || carrito.length === 0) {
+      return;
+    }
+
+    const pedido = {
+      id: `GR-${Date.now()}`,
+      comprador: sesion.correo,
+      fecha: new Date().toLocaleDateString("es-CL"),
+      productos: carrito.map((producto) => ({
+        id: producto.id,
+        nombre: producto.nombre,
+        precio: producto.precio,
+      })),
+      total: carrito.reduce((total, producto) => total + producto.precio, 0),
+      estado: "Recibido",
+    };
+
+    setPedidos([pedido, ...pedidos]);
+    setCarrito([]);
+    setMensajeCompra(`Pedido ${pedido.id} registrado. Puedes verlo en Mi cuenta.`);
   }
 
   function iniciarSesion(correo, contrasena) {
@@ -154,7 +179,9 @@ function App() {
 
   function cerrarSesion() {
     setSesion(null);
-    setPagina("catalogo");
+    setCarrito([]);
+    setMensajeCompra("");
+    setPagina("inicio");
   }
 
   function guardarPerfil(usuarioActualizado) {
@@ -182,7 +209,7 @@ function App() {
       return false;
     }
 
-    setProductosNuevos([
+    const productosActualizados = [
       ...productosNuevos,
       {
         id: `nuevo-${Date.now()}`,
@@ -191,19 +218,35 @@ function App() {
         descripcion: datosProducto.descripcion.trim(),
         detalle: datosProducto.detalle.trim(),
         precio,
+        imagen: datosProducto.imagen || "",
       },
-    ]);
+    ];
+
+    try {
+      localStorage.setItem("granoProductosReact", JSON.stringify(productosActualizados));
+    } catch {
+      return false;
+    }
+
+    setProductosNuevos(productosActualizados);
     return true;
   }
 
   function quitarProducto(idProducto) {
-    setProductosNuevos(
-      productosNuevos.filter((producto) => producto.id !== idProducto),
+    const productosActualizados = productosNuevos.filter(
+      (producto) => producto.id !== idProducto,
     );
+    localStorage.setItem("granoProductosReact", JSON.stringify(productosActualizados));
+    setProductosNuevos(productosActualizados);
   }
 
   function mostrarCatalogo() {
-    setPagina("catalogo");
+    setPagina("productos");
+    setProductoSeleccionado(null);
+  }
+
+  function mostrarInicio() {
+    setPagina("inicio");
     setProductoSeleccionado(null);
   }
 
@@ -218,7 +261,16 @@ function App() {
       />
     );
   } else if (pagina === "carrito") {
-    contenido = <Carrito carrito={carrito} onQuitar={quitarDelCarrito} />;
+    contenido = (
+      <Carrito
+        carrito={carrito}
+        sesion={sesion}
+        mensajeCompra={mensajeCompra}
+        onQuitar={quitarDelCarrito}
+        onComprar={confirmarCompra}
+        onIrAcceso={() => setPagina("acceso")}
+      />
+    );
   } else if (pagina === "acceso") {
     contenido = (
       <Acceso
@@ -256,6 +308,17 @@ function App() {
     );
   } else if (pagina === "contacto") {
     contenido = <Contacto usuario={sesion} onEnviar={enviarMensaje} />;
+  } else if (pagina === "productos") {
+    contenido = (
+      <Catalogo
+        productos={productos}
+        onVerDetalle={(producto) => {
+          setProductoSeleccionado(producto);
+          setPagina("detalle");
+        }}
+        onAgregar={agregarAlCarrito}
+      />
+    );
   } else {
     contenido = (
       <>
@@ -267,9 +330,9 @@ function App() {
               Cafés de origen y pequeños detalles para disfrutar sin apuro.
               Encuentra tu próxima taza favorita.
             </p>
-            <a className="boton-enlace" href="#productos">
+            <button className="boton-enlace" type="button" onClick={mostrarCatalogo}>
               Conoce nuestro café ↗
-            </a>
+            </button>
           </div>
           <img
             src={imagenHero}
@@ -277,14 +340,11 @@ function App() {
           />
         </section>
 
-        <Catalogo
-          productos={productos}
-          onVerDetalle={(producto) => {
-            setProductoSeleccionado(producto);
-            setPagina("detalle");
-          }}
-          onAgregar={agregarAlCarrito}
-        />
+        <section className="inicio-destacados">
+          <p className="etiqueta">LA COLECCIÓN</p>
+          <h2>Explora nuestros productos.</h2>
+          <button type="button" onClick={mostrarCatalogo}>Ver todos los productos</button>
+        </section>
       </>
     );
   }
@@ -307,11 +367,14 @@ function App() {
     <>
       <div className="franja">Café de especialidad, a tu ritmo.</div>
       <header className="encabezado">
-        <button className="marca boton-marca" type="button" onClick={mostrarCatalogo}>
+        <button className="marca boton-marca" type="button" onClick={mostrarInicio}>
           grano
           <span className="marca-sub">CAFÉ &amp; RITUALES</span>
         </button>
         <nav>
+          <button className="enlace-menu" type="button" onClick={mostrarInicio}>
+            Inicio
+          </button>
           <button className="enlace-menu" type="button" onClick={mostrarCatalogo}>
             Nuestro café
           </button>

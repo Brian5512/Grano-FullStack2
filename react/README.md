@@ -11,9 +11,13 @@ npm install
 npm run dev
 ```
 
-La aplicación incluye el catálogo y las fichas de producto, un carrito que se guarda en `localStorage`, acceso y registro con validación del RUT, cuenta de comprador, contacto y un panel de administración. Usuarios, sesión y mensajes de esta práctica también se guardan en `localStorage`; el acceso de prueba es `admin@duocuc.cl` con contraseña `1234`. Como es una maqueta, no procesa compras ni usa un servidor.
+La aplicación incluye Inicio, una página de productos con sus fichas, un carrito con imágenes y total, acceso y registro con validación del RUT, cuenta de comprador, contacto y un panel de administración. Usuarios, sesión y mensajes de esta práctica se guardan en `localStorage`; el acceso de prueba es `admin@duocuc.cl` con contraseña `1234`.
 
-Desde administración se pueden agregar productos de prueba. Sus datos se guardan en `localStorage` bajo `granoProductosReact` y aparecen en el catálogo al instante, incluso después de recargar. La imagen de ejemplo está incluida en `src/assets`; registrar un producto no crea archivos. También se pueden quitar los productos agregados en esta práctica.
+Un comprador que inició sesión puede pulsar **Realizar compra**. Esto registra un pedido de prueba en el historial de su cuenta y vacía el carrito. No hay pagos ni servidor. Al cerrar sesión, el carrito también se vacía.
+
+Desde administración se pueden agregar productos de prueba con una imagen JPG, PNG o WebP de hasta 500 KB. Sus datos se guardan en `localStorage` bajo `granoProductosReact` y aparecen en el catálogo al instante, incluso después de recargar. Si no se elige imagen, se muestra una de ejemplo. También se pueden quitar los productos agregados en esta práctica.
+
+Si el navegador integrado de VS Code no permite escribir `@` en los campos de correo, abre la dirección que entrega Vite en Chrome o Edge. El formulario usa un campo de correo normal y no cambia el teclado.
 
 ## Archivos que se integran
 

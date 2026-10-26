@@ -33,7 +33,9 @@ function Administracion({
 
   function crearProducto(evento) {
     evento.preventDefault();
-    const datos = new FormData(evento.target);
+    const formulario = evento.currentTarget;
+    const datos = new FormData(formulario);
+    const archivo = datos.get("imagen");
     const producto = {
       nombre: datos.get("nombre"),
       categoria: datos.get("categoria"),
@@ -42,13 +44,30 @@ function Administracion({
       precio: datos.get("precio"),
     };
 
-    if (!onCrearProducto(producto)) {
-      setEstadoProducto("Revisa el precio o usa otro nombre de producto.");
+    function guardarProducto(imagen = "") {
+      if (!onCrearProducto({ ...producto, imagen })) {
+        setEstadoProducto("Revisa el nombre y el precio, o usa una imagen más pequeña.");
+        return;
+      }
+
+      formulario.reset();
+      setEstadoProducto("Producto agregado al catálogo.");
+    }
+
+    if (!archivo || archivo.size === 0) {
+      guardarProducto();
       return;
     }
 
-    evento.target.reset();
-    setEstadoProducto("Producto agregado al catálogo.");
+    if (!["image/jpeg", "image/png", "image/webp"].includes(archivo.type) || archivo.size > 500000) {
+      setEstadoProducto("Elige una imagen JPG, PNG o WebP de hasta 500 KB.");
+      return;
+    }
+
+    const lector = new FileReader();
+    lector.onload = () => guardarProducto(lector.result);
+    lector.onerror = () => setEstadoProducto("No se pudo leer la imagen. Inténtalo de nuevo.");
+    lector.readAsDataURL(archivo);
   }
 
   return (
@@ -91,11 +110,16 @@ function Administracion({
             step="1"
             required
           />
+          <label htmlFor="producto-imagen">Imagen del producto</label>
+          <input
+            id="producto-imagen"
+            name="imagen"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+          />
+          <p className="ayuda-formulario">JPG, PNG o WebP de hasta 500 KB. Si no eliges una, se usa la imagen de ejemplo.</p>
           <button type="submit">Agregar al catálogo</button>
         </form>
-        <p className="ayuda-formulario">
-          Los productos nuevos usan una imagen de ejemplo.
-        </p>
         <p className="mensaje-formulario" role="status">{estadoProducto}</p>
         {productosNuevos.length > 0 && (
           <ul className="lista-productos-admin">
@@ -123,7 +147,7 @@ function Administracion({
           <ul>
             {pedidos.map((pedido) => (
               <li key={pedido.id}>
-                {pedido.id} · {pedido.comprador} · {pedido.estado}
+                {pedido.id} · {pedido.comprador} · {pedido.estado} · ${pedido.total.toLocaleString("es-CL")} CLP
               </li>
             ))}
           </ul>

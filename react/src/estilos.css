@@ -177,6 +177,35 @@ main {
   font-size: clamp(28px, 3vw, 38px);
 }
 
+.nosotros {
+  padding: 48px 0 72px;
+}
+
+.nosotros h1 {
+  margin: 0 0 28px;
+  font-size: clamp(36px, 4vw, 48px);
+}
+
+.contenido-nosotros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.contenido-nosotros img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.contenido-nosotros h2 {
+  font-size: clamp(28px, 3vw, 36px);
+}
+
+.contenido-nosotros p {
+  color: #58675c;
+}
+
 .etiqueta {
   margin: 0 0 12px;
   color: #58675c;
@@ -469,6 +498,7 @@ main {
   }
 
   .presentacion,
+  .contenido-nosotros,
   .detalle-producto,
   .columnas-formularios {
     grid-template-columns: 1fr;

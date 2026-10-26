@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-La aplicación incluye Inicio, una página de productos con sus fichas, un carrito con imágenes y total, acceso y registro con validación del RUT, cuenta de comprador, contacto y un panel de administración. Usuarios, sesión y mensajes de esta práctica se guardan en `localStorage`; el acceso de prueba es `admin@duocuc.cl` con contraseña `1234`.
+La aplicación incluye Inicio, Nuestro café, Nosotros, un carrito con imágenes y total, acceso y registro con validación del RUT, cuenta de comprador, contacto y un panel de administración. Al crear una cuenta de comprador, la sesión se abre automáticamente. Usuarios, sesión y mensajes de esta práctica se guardan en `localStorage`; el acceso de prueba es `admin@duocuc.cl` con contraseña `1234`.
 
 Un comprador que inició sesión puede pulsar **Realizar compra**. Esto registra un pedido de prueba en el historial de su cuenta y vacía el carrito. No hay pagos ni servidor. Al cerrar sesión, el carrito también se vacía.
 

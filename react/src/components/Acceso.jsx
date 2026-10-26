@@ -43,10 +43,7 @@ function Acceso({ onIniciar, onRegistrar, onCambiarContrasena }) {
       return;
     }
 
-    evento.target.reset();
-    setRut("");
-    setMensajeRut("");
-    setMensajeRegistro("Cuenta creada. Ya puedes iniciar sesión.");
+    // Al crear la cuenta, App abre la sesión y muestra Mi cuenta.
   }
 
   function revisarRut() {

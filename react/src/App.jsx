@@ -5,6 +5,7 @@ import Carrito from "./components/Carrito.jsx";
 import Acceso from "./components/Acceso.jsx";
 import Cuenta from "./components/Cuenta.jsx";
 import Contacto from "./components/Contacto.jsx";
+import Nosotros from "./components/Nosotros.jsx";
 import Administracion from "./components/Administracion.jsx";
 import imagenHero from "./assets/hero.svg";
 import imagenProductoNuevo from "./assets/producto-nuevo.svg";
@@ -157,6 +158,20 @@ function App() {
     return true;
   }
 
+  function registrarYEntrar(usuarioNuevo) {
+    if (!registrarUsuario(usuarioNuevo)) {
+      return false;
+    }
+
+    setSesion({
+      nombre: usuarioNuevo.nombre,
+      correo: usuarioNuevo.correo,
+      rol: usuarioNuevo.rol,
+    });
+    setPagina("cuenta");
+    return true;
+  }
+
   function cambiarContrasena(correo, contrasenaActual, contrasenaNueva) {
     const usuarioEncontrado = usuarios.find(
       (usuario) =>
@@ -275,7 +290,7 @@ function App() {
     contenido = (
       <Acceso
         onIniciar={iniciarSesion}
-        onRegistrar={registrarUsuario}
+        onRegistrar={registrarYEntrar}
         onCambiarContrasena={cambiarContrasena}
       />
     );
@@ -308,6 +323,8 @@ function App() {
     );
   } else if (pagina === "contacto") {
     contenido = <Contacto usuario={sesion} onEnviar={enviarMensaje} />;
+  } else if (pagina === "nosotros") {
+    contenido = <Nosotros onIrContacto={() => setPagina("contacto")} />;
   } else if (pagina === "productos") {
     contenido = (
       <Catalogo
@@ -341,9 +358,9 @@ function App() {
         </section>
 
         <section className="inicio-destacados">
-          <p className="etiqueta">LA COLECCIÓN</p>
-          <h2>Explora nuestros productos.</h2>
-          <button type="button" onClick={mostrarCatalogo}>Ver todos los productos</button>
+          <p className="etiqueta">CONOCE GRANO</p>
+          <h2>Hay una historia detrás de cada taza.</h2>
+          <button type="button" onClick={() => setPagina("nosotros")}>Sobre nosotros</button>
         </section>
       </>
     );
@@ -377,6 +394,13 @@ function App() {
           </button>
           <button className="enlace-menu" type="button" onClick={mostrarCatalogo}>
             Nuestro café
+          </button>
+          <button
+            className="enlace-menu"
+            type="button"
+            onClick={() => setPagina("nosotros")}
+          >
+            Nosotros
           </button>
           <button
             className="enlace-menu"
